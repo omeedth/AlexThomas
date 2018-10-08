@@ -58,7 +58,7 @@
       .dock {
         position: absolute;
         bottom: 0;
-        height: 50px;
+        height: 40px;
         width: 100%;
         margin: 0;
         padding: 0;
@@ -347,19 +347,19 @@
             </div>
 
             <div class="directories">
-              <div class="desktop_dir dir active_dir">
-                  <img  class="dir_logo" src="Open_folder_yellow.png"/>
+              <div id="Desktop_dir" class="Desktop_dir dir active_dir" onclick="switch_active_directory('Desktop_dir')">
+                  <img class="dir_logo" src="Open_folder_yellow.png"/>
                   <h5 class="dir_name">Desktop</h5>
               </div>
-              <div class="documents_dir dir">
+              <div id="Documents_dir" class="Documents_dir dir" onclick="switch_active_directory('Documents_dir')">
                 <img  class="dir_logo" src="Open_folder_yellow.png"/>
                 <h5 class="dir_name">Documents</h5>
               </div>
-              <div class="pictures_dir dir">
+              <div id="Pictures_dir" class="Pictures_dir dir" onclick="switch_active_directory('Pictures_dir')">
                 <img  class="dir_logo" src="Open_folder_yellow.png"/>
                 <h5 class="dir_name">Pictures</h5>
               </div>
-              <div class="C_dir dir">
+              <div id="C:_dir" class="C:_dir dir" onclick="switch_active_directory('C:_dir')">
                 <img  class="dir_logo" src="Removable-Drive-icon.png"/>
                 <h5 class="dir_name">OS (C:)</h5>
               </div>
@@ -369,17 +369,17 @@
 
               <!-- Desktop -->
 
-              <div class="dir">
+              <div id="projects2" class="Desktop_dir_sub dir folder_dir">
                 <img class="dir_logo" src="closed_folder_yellow.png" />
                 <h5 class="dir_name">Projects</h5>
               </div>
 
-              <div class="dir">
+              <div id="aboutme2" class="Desktop_dir_sub dir file_clk">
                 <img class="dir_logo" src="txt_file.png" />
                 <h5 class="dir_name">AboutMe.txt</h5>
               </div>
 
-              <div class="dir">
+              <div id="resume2" class="Desktop_dir_sub dir file_clk">
                 <img class="dir_logo" src="txt_file.png" />
                 <h5 class="dir_name">Resume.txt</h5>
               </div>
@@ -557,6 +557,34 @@
       //   }
       // }
 
+      function switch_active_directory(className) {
+        dir = document.getElementsByClassName(className)[0];
+        prevElem = document.getElementsByClassName("active_dir")[0];
+        prevElem.classList.remove("active_dir");
+        toggleAll(document.getElementsByClassName(prevElem.id + "_sub"));
+        dir.classList.add("active_dir");
+        toggleAll(document.getElementsByClassName(className + "_sub"));
+        console.log(dir.id.substring(0,dir.id.length - 4));
+        document.getElementsByClassName("path_str")[0].innerHTML = dir.id.substring(0,dir.id.length - 4);
+      }
+
+      function toggle(elem) {
+        if(elem === undefined)
+          return;
+
+        if (elem.style.display === "none") {
+            elem.style.display = "block";
+        } else {
+            elem.style.display = "none";
+        }
+      }
+
+      function toggleAll(elems) {
+        for(var i = 0; i < elems.length; i++) {
+          toggle(elems[i]);
+        }
+      }
+
       function open_file(e) {
         elem = e.target;
         parent = elem.parentNode.parentNode;
@@ -570,6 +598,10 @@
           } else {  // Closed
             open_program("file_explorer");
           }
+        } else if((elem.classList.contains("file") || parent.classList.contains("file")) || (elem.classList.contains("file_clk") || parent.classList.contains("file_clk"))) {
+
+        } else if(elem.classList.contains("folder_dir") || parent.classList.contains("folder_dir")) {
+
         }
       }
 
@@ -578,6 +610,7 @@
       }
 
       function close_program(id) {
+        switch_active_directory("Desktop_dir");
         document.getElementById(id).style.left = "0";
         document.getElementById(id).style.top = "0";
         document.getElementById(id).style.display = "none";
