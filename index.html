@@ -1,0 +1,650 @@
+<!doctype html>
+<html>
+  <head>
+
+    <title>Alex Thomas</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <!-- Styles -->
+
+    <style>
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      p, a, h1, h2, h3, h4, h5, h6 {
+        color: white;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      p {
+        font-size: 12.5px;
+      }
+
+      h5 {
+        font-size: 14px;
+      }
+
+      body, html {
+        width: 100%;
+        height: 100%;
+        /* margin: 0;
+        padding: 0; */
+        overflow: hidden;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        background: url("polygon-wallpaper.jpg");
+        /*background: brown;*/
+      }
+
+      .desktop {
+        width: 100%;
+        height: 100%;
+        /*background: green;*/
+      }
+
+      .dock {
+        position: absolute;
+        bottom: 0;
+        height: 50px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: rgba(0,0,0,.90);
+      }
+
+      /* .file_grid_wrapper, .file_grid, .file_row, .file_data {
+        margin: 0;
+        padding: 0;
+      }
+
+      .file_grid_wrapper {
+        width: 100%;
+        height: 100%;
+        border: 1px solid black;
+      }
+
+      .file_grid {
+        width: 100%;
+        height: 100%;
+      }
+
+      .file_row {
+        border: 1px solid black;
+      }
+
+      .file_data {
+        max-height: 50px;
+        max-width: 50px;
+        border: 2px solid brown;
+        background: brown;
+      } */
+
+      .file {
+        position: absolute;
+        /*display: flex;*/
+        height: 80px;
+        width: 80px;
+        padding: 2.5px;
+        /* border-radius: 5px;
+        border: 1px solid black; */
+        overflow: hidden;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .selected {
+        border-radius: 5px;
+        border: 1px solid black;
+      }
+
+      .file_type_container {
+        margin: auto;
+        width: 50px;
+        height: 50px;
+        /* border: 1px solid red; */
+      }
+
+
+      .file_type {
+        width: 100%;
+        height: 100%;
+        margin: 0px auto 0px auto;
+        /* border: 1px solid green; */
+      }
+
+      .file_name_container {
+        width: 100%;
+        height: auto;
+        /* border: 1px solid blue; */
+      }
+
+      .file_name {
+
+      }
+
+      #resume {
+        position: absolute;
+        /* background: brown; */
+        left: 5px;
+        bottom: 55px;
+      }
+
+      #aboutme {
+        position: absolute;
+        left: 5px;
+        bottom: 140px;
+      }
+
+      #projects {
+        position: absolute;
+        left: 5px;
+        bottom: 225px;
+      }
+
+      #file_explorer {
+        display: none;
+      }
+
+      .program {
+        position: absolute;
+        width: 450px;
+        height: 350px;
+        border-radius: 5px;
+        border: 1px solid black;
+        background: #1e1d1d;
+      }
+
+      .program_header {
+        position: absolute;
+        width: 100%;
+        height: 25px;
+        border-bottom: 1px solid black;
+        background: #111111;
+      }
+
+      .header_btn {
+        display: inline-block;
+        border-radius: 100%;
+        height: 10px;
+        width: 10px;
+        border: 1px solid white;
+        margin: 7 2.5px 0 2.5px;
+        cursor: pointer;
+        opacity: 0.7;
+      }
+
+      .header_btn:hover {
+        opacity: 1;
+      }
+
+      .header_btn:first-child {
+        margin-left: 10px;
+      }
+
+      .close {
+        background: #772929;
+      }
+
+      .minimize {
+        background: #897510;
+      }
+
+      .maximize {
+        background: #024413;
+      }
+
+      .directories {
+        display: inline-block;
+        float: left;
+        height: 100%;
+        width: 30%;
+        border-right: 1px solid black;
+        padding: 25px 5px;
+      }
+
+      .dir {
+        width: 100%;
+        height: 30px;
+        padding: 5px;
+        border: 1px solid black;
+        margin: 5px 0;
+        background: #232323;
+        cursor: pointer;
+      }
+
+      .dir:hover {
+        background: #323333;
+      }
+
+      .dir_name {
+        float: right;
+        line-height: 18px;
+      }
+
+      .dir_logo {
+        display: inline-block;
+        float: left;
+        margin-right: 10px;
+        height: 20px;
+      }
+
+      .active_dir {
+        background: #323333;
+      }
+
+      .files {
+        width: 69.99%;
+        height: 100%;
+        float: right;
+        padding: 25px 5px;
+      }
+
+      .path {
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        bottom: 0;
+        left: 0;
+        padding: 5px;
+        border-top: 1px solid black;
+        background: #232323;
+      }
+
+      .pth {
+        display: inline-block;
+        float: left;
+        text-align: center;
+        line-height: 18px;
+        width: 50px;
+        height: 20px;
+        border-radius: 5px;
+        border: 1px solid black;
+        background: #323333;
+        margin-right: 10px
+      }
+
+      .path_str {
+        line-height: 18px;
+      }
+
+    </style>
+
+    <!-- End Styles -->
+
+    <!-- Content -->
+
+    <div class="screen"> <!-- The Screen of the computer (Wrapper) -->
+
+      <div id="desktop" class="desktop">
+
+        <!-- <table class="file_grid_wrapper"> -->
+          <!--<tbody class="file_grid">-->
+
+          <!--</tbody>-->
+        <!-- </table> -->
+
+        <!-- Files -->
+
+        <div id="resume" class="file">
+
+          <div name="file" class="file_type_container">
+            <img class="file_type" src="txt_file.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">Resume.txt</p>
+          </div>
+
+        </div>
+
+        <div id="aboutme" class="file">
+
+          <div class="file_type_container">
+            <img class="file_type" src="txt_file.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">AboutMe.txt</p>
+          </div>
+
+        </div>
+
+        <div id="projects" class="file folder">
+
+          <div class="file_type_container">
+            <img class="file_type" src="closed_folder_yellow.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">Projects</p>
+          </div>
+
+        </div>
+
+        <!-- Files End -->
+
+        <!-- Programs -->
+
+        <div id="file_explorer" class="program">
+
+            <div id="file_explorer_header" class="program_header">
+              <div class="close header_btn" onclick="close_program('file_explorer')"></div>
+              <div class="minimize header_btn" onclick="minimize_program('file_explorer')"></div>
+              <div class="maximize header_btn" onclick="maximize_program('file_explorer')"></div>
+            </div>
+
+            <div class="directories">
+              <div class="desktop_dir dir active_dir">
+                  <img  class="dir_logo" src="Open_folder_yellow.png"/>
+                  <h5 class="dir_name">Desktop</h5>
+              </div>
+              <div class="documents_dir dir">
+                <img  class="dir_logo" src="Open_folder_yellow.png"/>
+                <h5 class="dir_name">Documents</h5>
+              </div>
+              <div class="pictures_dir dir">
+                <img  class="dir_logo" src="Open_folder_yellow.png"/>
+                <h5 class="dir_name">Pictures</h5>
+              </div>
+              <div class="C_dir dir">
+                <img  class="dir_logo" src="Removable-Drive-icon.png"/>
+                <h5 class="dir_name">OS (C:)</h5>
+              </div>
+            </div>
+
+            <div class="files">
+
+              <!-- Desktop -->
+
+              <div class="dir">
+                <img class="dir_logo" src="closed_folder_yellow.png" />
+                <h5 class="dir_name">Projects</h5>
+              </div>
+
+              <div class="dir">
+                <img class="dir_logo" src="txt_file.png" />
+                <h5 class="dir_name">AboutMe.txt</h5>
+              </div>
+
+              <div class="dir">
+                <img class="dir_logo" src="txt_file.png" />
+                <h5 class="dir_name">Resume.txt</h5>
+              </div>
+
+              <!-- End Desktop -->
+
+              <!-- Documents -->
+
+              <!-- End Documents -->
+
+              <!-- Pictures -->
+
+              <!-- End Pictures -->
+
+              <!-- OS C: -->
+
+              <!-- End OS C: -->
+
+              <!-- Path -->
+
+              <div class="path">
+                <div class="pth"><h5>Path:</h5></div>
+                <h5 class="path_str">Desktop</h5>
+              </div>
+
+              <!-- End Path -->
+
+            </div>
+
+        </div>
+
+        <!-- Programs End -->
+
+      </div>
+
+      <div class="dock">
+
+
+
+      </div>
+
+    </div>
+
+    <!-- End Content -->
+
+    <!-- Scripts -->
+
+    <script>
+
+      // function correctDesktop() {
+      //   td = document.getElementsByClassName("file_data")[0].clientWidth;
+      //   console.log("<td> width: " + td);
+      //   h = (window.innerHeight - 50);
+      //   document.getElementsByClassName("desktop")[0].style.height = h.toString() + "px";
+      //   grid();
+      // }
+      //
+      // function deleteGridColumns(numToDelete) {
+      //
+      //   rows = document.getElementsByClassName("file_row");
+      //
+      //   for(var i = 0; i < rows.length; i++) {
+      //
+      //     for(var deleteC = 0; deleteC < numToDelete; deleteC++) {
+      //
+      //       rows[i].removeChild(rows[i].lastChild);
+      //
+      //     }
+      //
+      //   }
+      //
+      // }
+      //
+      // function addGridColumns(numToAdd) {
+      //
+      //   rows = document.getElementsByClassName("file_row");
+      //
+      //   for(var i = 0; i < rows.length; i++) {
+      //
+      //     for(var addC = 0; addC < numToAdd; addC++) {
+      //
+      //       var node = document.createElement("td");
+      //       node.classList.add("file_data");
+      //       rows[i].appendChild(node);
+      //
+      //     }
+      //
+      //   }
+      //
+      // }
+      //
+      // function deleteGridRows(numToDelete) {
+      //
+      //   rows = document.getElementsByClassName("file_row");
+      //   table = document.getElementsByClassName("file_grid_wrapper")[0];
+      //
+      //   console.log("Remove: " + numToDelete);
+      //
+      //   for(var i = 0; i < rows.length; i++) {
+      //
+      //     for(var deleteR = 0; deleteR < numToDelete; deleteR++) {
+      //
+      //       console.log("<tr>" + table.firstChild);
+      //
+      //       rows[i].parentNode.removeChild(rows[i]);
+      //
+      //     }
+      //
+      //   }
+      //
+      // }
+      //
+      // function addGridRows(numToAdd) {
+      //
+      //   rows = document.getElementsByClassName("file_row");
+      //
+      //   for(var i = 0; i < rows.length; i++) {
+      //
+      //     for(var addR = 0; addR < numToAdd; addR++) {
+      //
+      //       var node = document.createElement("tr");
+      //       node.classList.add("file_row");
+      //       rows[i].parentNode.insertBefore(node,rows[i].parentNode.firstChild);
+      //
+      //     }
+      //
+      //   }
+      //
+      // }
+      //
+      // function grid() {
+      //   width = window.innerWidth;
+      //   height = document.getElementsByClassName("desktop")[0].clientHeight;
+      //   columns = Math.floor(width / 100);
+      //   rows = Math.floor(height / 100);
+      //   currRow = document.getElementsByClassName("file_row").length;
+      //   currCol = document.getElementsByClassName("file_row")[0].children.length;
+      //
+      //   console.log("Adjusted Rows: " + rows + ", Adjusted Columns: " + columns);
+      //
+      //   if(currRow < rows) {
+      //     addGridRows(rows - currRow);
+      //   } else if(currRow > rows) {
+      //     //deleteGridRows(currRow - rows);
+      //   }
+      //
+      //   if(currCol < columns) {
+      //     addGridColumns(columns - currCol);
+      //   } else if(currCol > columns) {
+      //     deleteGridColumns(currCol - columns);
+      //   }
+      //
+      //   console.log("Current Width: " + currCol + ", Current Height: " + currRow);
+      //   console.log("Width: " + width + ", Height: " + height);
+      // }
+      //
+      // correctDesktop();
+
+      //Make the DIV element draggagle:
+      //dragElement(document.getElementById("resume"));
+
+      document.getElementById("desktop").addEventListener("dblclick", open_file);
+
+      // function select(e) {
+      //   selected = document.getElementsByClassName("selected")[0];
+      //   if(!(selected === undefined || selected.length == 0)) {
+      //     selected.classList.remove("selected");
+      //   }
+      //   console.log("Selected: " + selected);
+      //   elem = e.target;
+      //   if(elem.classList.contains("file")) { // If is file
+      //     elem.classList.add("selected");
+      //   } else if (elem.parentNode.parentNode.classList.contains("file")){
+      //     elem.parentNode.parentNode.classList.add("selected");
+      //   }
+      // }
+
+      function open_file(e) {
+        elem = e.target;
+        parent = elem.parentNode.parentNode;
+        console.log("Double Clicked: " + elem);
+        if(elem.classList.contains("folder") || parent.classList.contains("folder")) {
+          console.log("Double Clicked a Folder");
+          fe = document.getElementById("file_explorer");
+          if(fe.style.display == "block") { // ALready Opened
+            // Navigate to that directory
+
+          } else {  // Closed
+            open_program("file_explorer");
+          }
+        }
+      }
+
+      function open_program(id) {
+        document.getElementById(id).style.display = "block";
+      }
+
+      function close_program(id) {
+        document.getElementById(id).style.left = "0";
+        document.getElementById(id).style.top = "0";
+        document.getElementById(id).style.display = "none";
+      }
+
+      function minimize_program(id) {
+        document.getElementById(id).style.display = "none";
+      }
+
+      function maximize_program(id) {
+
+      }
+
+      // Make Files Draggable
+      draggableElements(document.getElementsByClassName("file"));
+      draggableElements(document.getElementsByClassName("program"))
+
+      function draggableElements(elems) {
+        for(var i = 0; i < elems.length; i++) {
+          dragElement(elems[i]);
+        }
+      }
+
+      function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elmnt.id + "_header")) {
+          /* if present, the header is where you move the DIV from:*/
+          document.getElementById(elmnt.id + "_header").onmousedown = dragMouseDown;
+        } else {
+          /* otherwise, move the DIV from anywhere inside the DIV:*/
+          elmnt.onmousedown = dragMouseDown;
+        }
+
+        function dragMouseDown(e) {
+          e = e || window.event;
+          e.preventDefault();
+          // get the mouse cursor position at startup:
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          // call a function whenever the cursor moves:
+          document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+          e = e || window.event;
+          e.preventDefault();
+          // calculate the new cursor position:
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          // set the element's new position:
+          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+          elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+          /* stop moving when mouse button is released:*/
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      }
+
+    </script>
+
+    <!-- End Scripts -->
+
+  </body>
+</html>
