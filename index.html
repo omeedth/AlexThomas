@@ -106,8 +106,8 @@
       }
 
       .selected {
-        border-radius: 5px;
-        border: 1px solid black;
+        outline: 1px solid #d4d4d6;
+        background: rgba(193,193,193,0.8);
       }
 
       .file_type_container {
@@ -158,6 +158,17 @@
         display: none;
       }
 
+      #text_editor {
+        display: none;
+        padding: 5px;
+      }
+
+      .document {
+        width: 100%;
+        height: 300px;
+        margin-top: 30px;
+      }
+
       .program {
         position: absolute;
         width: 450px;
@@ -169,6 +180,8 @@
 
       .program_header {
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 25px;
         border-bottom: 1px solid black;
@@ -280,6 +293,18 @@
         line-height: 18px;
       }
 
+      #Projects_ {
+        display: none;
+      }
+
+      .Projects_dir_sub {
+        /* display: none; */
+      }
+
+      /* .Projects_dir_sub_sub {
+        display: none;
+      } */
+
     </style>
 
     <!-- End Styles -->
@@ -298,7 +323,7 @@
 
         <!-- Files -->
 
-        <div id="resume" class="file">
+        <div id="Resume" href="Resume.pdf" target="_blank" class="file txt">
 
           <div name="file" class="file_type_container">
             <img class="file_type" src="txt_file.png"/>
@@ -310,7 +335,7 @@
 
         </div>
 
-        <div id="aboutme" class="file">
+        <div id="Aboutme" class="file txt">
 
           <div class="file_type_container">
             <img class="file_type" src="txt_file.png"/>
@@ -322,7 +347,7 @@
 
         </div>
 
-        <div id="projects" class="file folder">
+        <div id="Projects" class="file folder">
 
           <div class="file_type_container">
             <img class="file_type" src="closed_folder_yellow.png"/>
@@ -369,20 +394,31 @@
 
               <!-- Desktop -->
 
-              <div id="projects2" class="Desktop_dir_sub dir folder_dir">
+              <div id="Projects2" class="Desktop_dir_sub dir folder_dir">
                 <img class="dir_logo" src="closed_folder_yellow.png" />
                 <h5 class="dir_name">Projects</h5>
               </div>
 
-              <div id="aboutme2" class="Desktop_dir_sub dir file_clk">
+              <div id="Aboutme2" class="Desktop_dir_sub dir txt file_clk">
                 <img class="dir_logo" src="txt_file.png" />
                 <h5 class="dir_name">AboutMe.txt</h5>
               </div>
 
-              <div id="resume2" class="Desktop_dir_sub dir file_clk">
+              <div id="Resume2" class="Desktop_dir_sub dir txt file_clk">
                 <img class="dir_logo" src="txt_file.png" />
                 <h5 class="dir_name">Resume.txt</h5>
               </div>
+
+              <!-- Projects Folder -->
+
+              <div id="Projects_" class="Projects_dir_sub">
+                <div id="Project1" class="Projects_dir_sub_sub dir file_clk">
+                  <img class="dir_logo" src="txt_file.png" />
+                  <h5 class="dir_name">Project.pro</h5>
+                </div>
+              </div>
+
+              <!-- End Projects Folder -->
 
               <!-- End Desktop -->
 
@@ -409,6 +445,15 @@
 
             </div>
 
+        </div>
+
+        <div id="text_editor" class="program">
+          <div id="text_editor_header" class="program_header">
+            <div class="close header_btn" onclick="close_program('text_editor')"></div>
+            <div class="minimize header_btn" onclick="minimize_program('text_editor')"></div>
+            <div class="maximize header_btn" onclick="maximize_program('text_editor')"></div>
+          </div>
+          <textarea class="document"></textarea>
         </div>
 
         <!-- Programs End -->
@@ -542,20 +587,22 @@
       //dragElement(document.getElementById("resume"));
 
       document.getElementById("desktop").addEventListener("dblclick", open_file);
+      document.getElementById("desktop").addEventListener("click", select);
 
-      // function select(e) {
-      //   selected = document.getElementsByClassName("selected")[0];
-      //   if(!(selected === undefined || selected.length == 0)) {
-      //     selected.classList.remove("selected");
-      //   }
-      //   console.log("Selected: " + selected);
-      //   elem = e.target;
-      //   if(elem.classList.contains("file")) { // If is file
-      //     elem.classList.add("selected");
-      //   } else if (elem.parentNode.parentNode.classList.contains("file")){
-      //     elem.parentNode.parentNode.classList.add("selected");
-      //   }
-      // }
+      function select(e) {
+        e.preventDefault();
+        selected = document.getElementsByClassName("selected")[0];
+        if(!(selected === undefined || selected.length == 0)) {
+          selected.classList.remove("selected");
+        }
+        // console.log("Selected: " + selected);
+        elem = e.target;
+        if(elem.classList.contains("file")) { // If is file
+          elem.classList.add("selected");
+        } else if (elem.parentNode.parentNode.classList.contains("file")){
+          elem.parentNode.parentNode.classList.add("selected");
+        }
+      }
 
       function switch_active_directory(className) {
         dir = document.getElementsByClassName(className)[0];
@@ -565,7 +612,19 @@
         dir.classList.add("active_dir");
         toggleAll(document.getElementsByClassName(className + "_sub"));
         console.log(dir.id.substring(0,dir.id.length - 4));
-        document.getElementsByClassName("path_str")[0].innerHTML = dir.id.substring(0,dir.id.length - 4);
+        if(dir.classList.contains("folder_dir")) {
+          document.getElementsByClassName("path_str")[0].innerHTML += "\\" + dir.id.slice(0,dir.id.length-1);
+          console.log("Display: " + document.getElementById("Projects_").style.display);
+          document.getElementById("Projects_").style.display = "block";
+          //toggle(document.getElementById("Projects_"));
+          // console.log(dir.id.slice(0,dir.id.length-1) + "_dir_sub");
+          // toggleAll(document.getElementsByClassName(dir.id.slice(0,dir.id.length-1) + "_dir_sub"));
+        } else {
+          document.getElementsByClassName("path_str")[0].innerHTML = dir.id.substring(0,dir.id.length - 4);
+          document.getElementById("Projects_").style.display = "none";
+          // toggle(document.getElementById("Projects_"));
+          // toggleAll(document.getElementsByClassName("Projects_dir_sub_sub"));
+        }
       }
 
       function toggle(elem) {
@@ -586,23 +645,71 @@
       }
 
       function open_file(e) {
+        e.preventDefault();
+        selected = document.getElementsByClassName("selected")[0];
+        if(!(selected === undefined || selected.length == 0)) {
+          selected.classList.remove("selected");
+        }
         elem = e.target;
         parent = elem.parentNode.parentNode;
-        console.log("Double Clicked: " + elem);
+        // console.log("Double Clicked: " + elem);
         if(elem.classList.contains("folder") || parent.classList.contains("folder")) {
-          console.log("Double Clicked a Folder");
+          // console.log("Double Clicked a Folder");
           fe = document.getElementById("file_explorer");
           if(fe.style.display == "block") { // ALready Opened
             // Navigate to that directory
-
+            if(document.getElementsByClassName("path_str")[0].innerHTML.endsWith("Projects")) {
+              //Do Nothing
+            } else {
+              show_dir_contents(elem);
+              show_dir_contents(parent);
+            }
           } else {  // Closed
             open_program("file_explorer");
           }
         } else if((elem.classList.contains("file") || parent.classList.contains("file")) || (elem.classList.contains("file_clk") || parent.classList.contains("file_clk"))) {
+          te = document.getElementById("text_editor");
+          txt = elem.id + parent.id;
+          console.log("Text File: " + txt);
+          if(te.style.display == "block") { // Already Opened
+            //Load the file we clicked on
 
+          } else {
+            open_program("text_editor");
+            // console.log("ID: " + txt);
+            load_file(txt);
+          }
         } else if(elem.classList.contains("folder_dir") || parent.classList.contains("folder_dir")) {
+          show_dir_contents(elem);
+        }
+      }
+
+      function show_dir_contents(elem) {
+        console.log("Show Dir!");
+        console.log(elem.id);
+        if(elem.id.startsWith("Projects")) {
+          console.log("projects");
+          switch_active_directory("folder_dir");
+          // switch_active_directory("Projects_dir_sub_sub");
+          // toggleAll(document.getElementsByClassName("Projects_dir_sub"));
+          // prevElem = document.getElementsByClassName("active_dir")[0];
+          // prevElem.classList.remove("active_dir");
+          // toggleAll(document.getElementsByClassName(prevElem.id + "_sub"));
+          // document.getElementsByClassName("path_str")[0].innerHTML += "\\projects";
 
         }
+      }
+
+      function load_file(id) {
+        if(id.startsWith("Aboutme")) {
+          document.getElementsByClassName("document")[0].value = "Hello! My name is Alex Thomas and this is my website!";
+        } else if(id.startsWith("Resume")) {
+          document.getElementsByClassName("document")[0].value = "This is my Resume";
+        }
+      }
+
+      function load_pdf(id) {
+
       }
 
       function open_program(id) {
@@ -610,10 +717,21 @@
       }
 
       function close_program(id) {
-        switch_active_directory("Desktop_dir");
-        document.getElementById(id).style.left = "0";
-        document.getElementById(id).style.top = "0";
-        document.getElementById(id).style.display = "none";
+        // console.log(id);
+        elem = document.getElementById(id);
+        if(id == "file_explorer") {
+          switch_active_directory("Desktop_dir");
+        } else if(id == "text_editor") {
+          document.getElementsByClassName("document")[0].value = "";
+        }
+
+        if(!(elem === undefined)) {
+          elem.style.left = "0";
+          elem.style.top = "0";
+          elem.style.display = "none";
+          elem.style.width = "450px";
+          elem.style.height = "350px";
+        }
       }
 
       function minimize_program(id) {
@@ -621,7 +739,21 @@
       }
 
       function maximize_program(id) {
-
+        elem = document.getElementById(id);
+        if(elem.style.width == "100%") {
+          elem.style.width = "450px";
+          elem.style.height = "350px";
+          if(id == "text_editor") {
+            document.getElementsByClassName("document")[0].style.height = "300px";
+          }
+        } else {
+          elem.style.width = "100%"
+          elem.style.height = "" + (window.innerHeight - 40) + "px";
+          if(id == "text_editor") {
+            console.log(elem.clientHeight);
+            document.getElementsByClassName("document")[0].style.height = "" + (elem.clientHeight - 45) + "px";
+          }
+        }
       }
 
       // Make Files Draggable
