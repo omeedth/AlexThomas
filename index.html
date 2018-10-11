@@ -167,6 +167,7 @@
         width: 100%;
         height: 300px;
         margin-top: 30px;
+        font-size: 16px;
       }
 
       .program {
@@ -323,7 +324,7 @@
 
         <!-- Files -->
 
-        <div id="Resume" href="Resume.pdf" target="_blank" class="file txt">
+        <div id="Resume" name="Resume.pdf" target="_blank" class="pdf file txt">
 
           <div name="file" class="file_type_container">
             <img class="file_type" src="txt_file.png"/>
@@ -670,6 +671,15 @@
         } else if((elem.classList.contains("file") || parent.classList.contains("file")) || (elem.classList.contains("file_clk") || parent.classList.contains("file_clk"))) {
           te = document.getElementById("text_editor");
           txt = elem.id + parent.id;
+
+
+
+          if(elem.classList.contains("pdf") || parent.classList.contains("pdf")) {
+            console.log("PDF");
+            load_pdf(txt);
+            return;
+          }
+
           console.log("Text File: " + txt);
           if(te.style.display == "block") { // Already Opened
             //Load the file we clicked on
@@ -709,7 +719,9 @@
       }
 
       function load_pdf(id) {
-
+        url = document.getElementById(id).name;        
+        var win = window.open(url, '_blank');
+        win.focus();
       }
 
       function open_program(id) {
