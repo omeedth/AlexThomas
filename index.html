@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
 
@@ -192,6 +192,12 @@
         height: 300px;
         margin-top: 30px;
         font-size: 16px;
+        padding: 5px;
+        /* font-weight: 400; */
+        color: #c3cbd8;
+        resize: none;
+        /* border: 1px solid black; */
+        background: #354051;
       }
 
       .program {
@@ -201,6 +207,12 @@
         border-radius: 5px;
         border: 1px solid black;
         background: #1e1d1d;
+        z-index: 0;
+      }
+
+      .focused {
+        /* border: 1px solid pink; */
+        z-index: 2;
       }
 
       .program_header {
@@ -424,30 +436,30 @@
 
         <!-- Programs -->
 
-        <div id="file_explorer" class="program">
+        <div id="file_explorer" class="program prog_part_1">
 
-            <div id="file_explorer_header" class="program_header">
-              <div class="close header_btn" onclick="close_program('file_explorer')"></div>
-              <div class="minimize header_btn" onclick="minimize_program('file_explorer')"></div>
-              <div class="maximize header_btn" onclick="maximize_program('file_explorer')"></div>
+            <div id="file_explorer_header" class="program_header prog_part_1">
+              <div class="close header_btn prog_part_1" onclick="close_program('file_explorer')"></div>
+              <div class="minimize header_btn prog_part_1" onclick="minimize_program('file_explorer')"></div>
+              <div class="maximize header_btn prog_part_1" onclick="maximize_program('file_explorer')"></div>
             </div>
 
-            <div class="directories">
+            <div class="directories prog_part_1">
               <div id="Desktop_dir" class="Desktop_dir dir active_dir" onclick="switch_active_directory('Desktop_dir')">
-                  <img class="dir_logo" src="Open_folder_yellow.png"/>
-                  <h5 class="dir_name">Desktop</h5>
+                  <img class="dir_logo prog_part_1" src="Open_folder_yellow.png"/>
+                  <h5 class="dir_name prog_part_1">Desktop</h5>
               </div>
-              <div id="Documents_dir" class="Documents_dir dir" onclick="switch_active_directory('Documents_dir')">
-                <img  class="dir_logo" src="Open_folder_yellow.png"/>
+              <div id="Documents_dir" class="Documents_dir dir prog_part_1" onclick="switch_active_directory('Documents_dir')">
+                <img  class="dir_logo prog_part_1" src="Open_folder_yellow.png"/>
                 <h5 class="dir_name">Documents</h5>
               </div>
-              <div id="Pictures_dir" class="Pictures_dir dir" onclick="switch_active_directory('Pictures_dir')">
-                <img  class="dir_logo" src="Open_folder_yellow.png"/>
-                <h5 class="dir_name">Pictures</h5>
+              <div id="Pictures_dir" class="Pictures_dir dir prog_part_1" onclick="switch_active_directory('Pictures_dir')">
+                <img  class="dir_logo prog_part_1" src="Open_folder_yellow.png"/>
+                <h5 class="dir_name prog_part_1">Pictures</h5>
               </div>
-              <div id="C:_dir" class="C:_dir dir" onclick="switch_active_directory('C:_dir')">
-                <img  class="dir_logo" src="Removable-Drive-icon.png"/>
-                <h5 class="dir_name">OS (C:)</h5>
+              <div id="C:_dir" class="C:_dir dir prog_part_1" onclick="switch_active_directory('C:_dir')">
+                <img  class="dir_logo prog_part_1" src="Removable-Drive-icon.png"/>
+                <h5 class="dir_name prog_part_1">OS (C:)</h5>
               </div>
             </div>
 
@@ -518,13 +530,13 @@
 
         </div>
 
-        <div id="text_editor" class="program">
-          <div id="text_editor_header" class="program_header">
-            <div class="close header_btn" onclick="close_program('text_editor')"></div>
-            <div class="minimize header_btn" onclick="minimize_program('text_editor')"></div>
-            <div class="maximize header_btn" onclick="maximize_program('text_editor')"></div>
+        <div id="text_editor" class="program prog_part_2">
+          <div id="text_editor_header" class="program_header prog_part_2">
+            <div class="close header_btn prog_part_2" onclick="close_program('text_editor')"></div>
+            <div class="minimize header_btn prog_part_2" onclick="minimize_program('text_editor')"></div>
+            <div class="maximize header_btn prog_part_2" onclick="maximize_program('text_editor')"></div>
           </div>
-          <textarea class="document"></textarea>
+          <textarea class="document prog_part"></textarea>
         </div>
 
         <!-- Programs End -->
@@ -660,8 +672,29 @@
       aboutme_txt = "Hello! My name is Alex Thomas and this is my website!";
       resume_txt = "This is a pure text version of my resume! For a prettier version open the PDF!"
 
+      onAboutMe = false;
+      onResume = false;
+
       document.getElementById("desktop").addEventListener("dblclick", open_file);
       document.getElementById("desktop").addEventListener("click", select);
+
+      document.getElementById("desktop").addEventListener("mousedown", focusElem);
+
+      function focusElem(e) {
+        elem = e.target;
+        // console.log(elem);
+        if((!elem.classList.contains("close")) && elem.classList.contains("prog_part_1")) { // If is program
+          console.log("File Explorer");
+          document.getElementsByClassName("focused")[0].classList.remove("focused");
+          prog = document.getElementById("file_explorer");
+          prog.classList.add("focused");
+        } else if((!elem.classList.contains("close")) && elem.classList.contains("prog_part_2")) {
+          console.log("Text Editor");
+          document.getElementsByClassName("focused")[0].classList.remove("focused");
+          prog = document.getElementById("text_editor");
+          prog.classList.add("focused");
+        }
+      }
 
       function select(e) {
         e.preventDefault();
@@ -671,10 +704,11 @@
         }
         // console.log("Selected: " + selected);
         elem = e.target;
+        parent = elem.parentNode.parentNode;
         if(elem.classList.contains("file")) { // If is file
           elem.classList.add("selected");
-        } else if (elem.parentNode.parentNode.classList.contains("file")){
-          elem.parentNode.parentNode.classList.add("selected");
+        } else if (parent.classList.contains("file")){
+          parent.classList.add("selected");
         }
       }
 
@@ -792,10 +826,24 @@
       }
 
       function load_file(id) {
+        if(document.getElementsByClassName("document")[0].style.display != "none")
+          save_text();
         if(id.startsWith("Aboutme")) {
           document.getElementsByClassName("document")[0].value = aboutme_txt;
+          onAboutMe = true;
+          onResume = false;
         } else if(id.startsWith("Resume")) {
           document.getElementsByClassName("document")[0].value = resume_txt;
+          onAboutMe = false;
+          onResume = true;
+        }
+      }
+
+      function save_text() {
+        if(onAboutMe) {
+          aboutme_txt = document.getElementsByClassName("document")[0].value;
+        } else if(onResume) {
+          resume_txt = document.getElementsByClassName("document")[0].value;
         }
       }
 
@@ -807,15 +855,21 @@
 
       function open_program(id) {
         document.getElementById(id).style.display = "block";
+        if(!(document.getElementsByClassName("focused") == undefined) && document.getElementsByClassName("focused").length > 0) {
+          document.getElementsByClassName("focused")[0].classList.remove("focused");
+        }
+        document.getElementById(id).classList.add("focused");
       }
 
       function close_program(id) {
         // console.log(id);
         elem = document.getElementById(id);
+        elem.classList.remove("focused");
         if(id == "file_explorer") {
           switch_active_directory("Desktop_dir");
         } else if(id == "text_editor") {
-          aboutme_txt = document.getElementsByClassName("document")[0].value;
+          save_text();
+          document.getElementsByClassName("document")[0].style.height = "300px";
           //document.getElementsByClassName("document")[0].value = "";
         }
 
@@ -846,7 +900,7 @@
           elem.style.width = "100%"
           elem.style.height = "" + (window.innerHeight - 40) + "px";
           if(id == "text_editor") {
-            console.log(elem.clientHeight);
+            // console.log(elem.clientHeight);
             document.getElementsByClassName("document")[0].style.height = "" + (elem.clientHeight - 45) + "px";
           }
         }
@@ -901,8 +955,8 @@
           // console.log("Height: " + window.innerHeight);
           cPos1 = elmnt.offsetLeft - pos1;
           cPos2 = elmnt.offsetTop - pos2;
-          cPos1 = (cPos1 < 0 ? 0 : (cPos1 + elmnt.clientWidth > window.innerWidth ? window.innerWidth - elmnt.clientWidth : cPos1));
-          cPos2 = (cPos2 < 0 ? 0 : (cPos2 + elmnt.clientHeight > window.innerHeight -40 ? window.innerHeight - elmnt.clientHeight - 40: cPos2));
+          cPos1 = (cPos1 < 0 ? 0 : (cPos1 + elmnt.clientWidth > window.innerWidth - 2 ? window.innerWidth - elmnt.clientWidth - 2: cPos1));
+          cPos2 = (cPos2 < 0 ? 0 : (cPos2 + elmnt.clientHeight > window.innerHeight - 42 ? window.innerHeight - elmnt.clientHeight - 42: cPos2));
           // console.log("cPos1: " + cPos1);
           // console.log("cPos2: " + cPos2);
 
