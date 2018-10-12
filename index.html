@@ -125,6 +125,12 @@
         /* border: 1px solid green; */
       }
 
+      .responsive {
+        width: auto;
+        height: 100%;
+        max-height: 50px;
+      }
+
       .file_name_container {
         width: 100%;
         height: auto;
@@ -152,6 +158,24 @@
         position: absolute;
         left: 5px;
         bottom: 225px;
+      }
+
+      #Me {
+        position: absolute;
+        left: 5px;
+        bottom: 310px;
+      }
+
+      #Resume_PDF {
+        position: absolute;
+        left: 5px;
+        bottom: 395px;
+      }
+
+      #Recycle_Bin {
+        position: absolute;
+        left: 5px;
+        top: 5px;
       }
 
       #file_explorer {
@@ -324,7 +348,19 @@
 
         <!-- Files -->
 
-        <div id="Resume" name="Resume.pdf" target="_blank" class="pdf file txt">
+        <div id="Recycle_Bin" class="file prog">
+
+          <div class="file_type_container">
+            <img class="file_type" src="recycle_bin.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">Recycle Bin</p>
+          </div>
+
+        </div>
+
+        <div id="Resume" class="file txt">
 
           <div name="file" class="file_type_container">
             <img class="file_type" src="txt_file.png"/>
@@ -356,6 +392,30 @@
 
           <div class="file_name_container">
             <p class="file_name">Projects</p>
+          </div>
+
+        </div>
+
+        <div id="Me" class="file img">
+
+          <div class="file_type_container">
+            <img class="file_type responsive" src="Me.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">Me.png</p>
+          </div>
+
+        </div>
+
+        <div id="Resume_PDF" class="file pdf">
+
+          <div class="file_type_container">
+            <img class="file_type" src="pdf_icon.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">Resume.pdf</p>
           </div>
 
         </div>
@@ -408,6 +468,16 @@
               <div id="Resume2" class="Desktop_dir_sub dir txt file_clk">
                 <img class="dir_logo" src="txt_file.png" />
                 <h5 class="dir_name">Resume.txt</h5>
+              </div>
+
+              <div id="Resume_PDF2" class="Desktop_dir_sub dir pdf file_clk">
+                <img class="dir_logo" src="pdf_icon.png" />
+                <h5 class="dir_name">Resume.pdf</h5>
+              </div>
+
+              <div id="Me2" class="Desktop_dir_sub dir img file_clk">
+                <img class="dir_logo" src="img_icon.png" />
+                <h5 class="dir_name">Me.png</h5>
               </div>
 
               <!-- Projects Folder -->
@@ -587,6 +657,9 @@
       //Make the DIV element draggagle:
       //dragElement(document.getElementById("resume"));
 
+      aboutme_txt = "Hello! My name is Alex Thomas and this is my website!";
+      resume_txt = "This is a pure text version of my resume! For a prettier version open the PDF!"
+
       document.getElementById("desktop").addEventListener("dblclick", open_file);
       document.getElementById("desktop").addEventListener("click", select);
 
@@ -625,6 +698,16 @@
           document.getElementById("Projects_").style.display = "none";
           // toggle(document.getElementById("Projects_"));
           // toggleAll(document.getElementsByClassName("Projects_dir_sub_sub"));
+        }
+      }
+
+      function recycle(elem) {
+        elem.style.display = none;
+      }
+
+      function recycleAll(elems) {
+        for(var i = 0; i < elems.length; i++) {
+          recycle(elems[i]);
         }
       }
 
@@ -668,22 +751,20 @@
           } else {  // Closed
             open_program("file_explorer");
           }
-        } else if((elem.classList.contains("file") || parent.classList.contains("file")) || (elem.classList.contains("file_clk") || parent.classList.contains("file_clk"))) {
+        } else if((elem.classList.contains("txt") || parent.classList.contains("txt")) || (elem.classList.contains("txt") || parent.classList.contains("txt"))) {
           te = document.getElementById("text_editor");
           txt = elem.id + parent.id;
 
-
-
-          if(elem.classList.contains("pdf") || parent.classList.contains("pdf")) {
-            console.log("PDF");
-            load_pdf(txt);
-            return;
-          }
+          // if(elem.classList.contains("pdf") || parent.classList.contains("pdf")) {
+          //   console.log("PDF");
+          //   load_pdf(txt);
+          //   return;
+          // }
 
           console.log("Text File: " + txt);
           if(te.style.display == "block") { // Already Opened
             //Load the file we clicked on
-
+            load_file(txt);
           } else {
             open_program("text_editor");
             // console.log("ID: " + txt);
@@ -712,14 +793,14 @@
 
       function load_file(id) {
         if(id.startsWith("Aboutme")) {
-          document.getElementsByClassName("document")[0].value = "Hello! My name is Alex Thomas and this is my website!";
+          document.getElementsByClassName("document")[0].value = aboutme_txt;
         } else if(id.startsWith("Resume")) {
-          document.getElementsByClassName("document")[0].value = "This is my Resume";
+          document.getElementsByClassName("document")[0].value = resume_txt;
         }
       }
 
       function load_pdf(id) {
-        url = document.getElementById(id).name;        
+        url = document.getElementById(id).name;
         var win = window.open(url, '_blank');
         win.focus();
       }
@@ -734,7 +815,8 @@
         if(id == "file_explorer") {
           switch_active_directory("Desktop_dir");
         } else if(id == "text_editor") {
-          document.getElementsByClassName("document")[0].value = "";
+          aboutme_txt = document.getElementsByClassName("document")[0].value;
+          //document.getElementsByClassName("document")[0].value = "";
         }
 
         if(!(elem === undefined)) {
@@ -752,6 +834,8 @@
 
       function maximize_program(id) {
         elem = document.getElementById(id);
+        elem.style.top = "0";
+        elem.style.left = "0";
         if(elem.style.width == "100%") {
           elem.style.width = "450px";
           elem.style.height = "350px";
@@ -807,9 +891,26 @@
           pos2 = pos4 - e.clientY;
           pos3 = e.clientX;
           pos4 = e.clientY;
+
+          // console.log("pos1: " + pos1);
+          // console.log("pos2: " + pos2);
+
+          // Correct The Position
+          // pos1: horizontal, pos2: vertical
+          // console.log("Width: " + window.innerWidth);
+          // console.log("Height: " + window.innerHeight);
+          cPos1 = elmnt.offsetLeft - pos1;
+          cPos2 = elmnt.offsetTop - pos2;
+          cPos1 = (cPos1 < 0 ? 0 : (cPos1 + elmnt.clientWidth > window.innerWidth ? window.innerWidth - elmnt.clientWidth : cPos1));
+          cPos2 = (cPos2 < 0 ? 0 : (cPos2 + elmnt.clientHeight > window.innerHeight -40 ? window.innerHeight - elmnt.clientHeight - 40: cPos2));
+          // console.log("cPos1: " + cPos1);
+          // console.log("cPos2: " + cPos2);
+
           // set the element's new position:
-          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-          elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+          elmnt.style.top = cPos2 + "px";
+          elmnt.style.left = cPos1 + "px";
+          // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+          // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
         }
 
         function closeDragElement() {
