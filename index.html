@@ -254,6 +254,9 @@
       .contained {
         height: 100%;
         width: auto;
+        overflow: hidden;
+        /* height: 348px;
+        max-width: 100%; */
         margin: auto;
       }
 
@@ -1095,7 +1098,9 @@
           if(id == "text_editor") {
             document.getElementsByClassName("document")[0].style.height = "300px";
           } else if(id == "photo_viewer") {
-            document.getElementById("img_view").style.height = "348px";
+            document.getElementById("img_view").style.height = "348px";            
+            // document.getElementById("img_view").style.width = "250px";
+            // document.getElementById("img_view").style.height = "100%";
           }
         } else {
           elem.style.width = "100%"
