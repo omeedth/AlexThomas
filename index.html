@@ -249,14 +249,16 @@
 
       .img_container {
         display: flex;
+        max-width: 100%;
+        max-height: 100%;
       }
 
       .contained {
-        height: 100%;
+        /* height: 100%; */
         width: auto;
         overflow: hidden;
-        /* height: 348px;
-        max-width: 100%; */
+        height: 348px;
+        max-width: 100%;
         margin: auto;
       }
 
@@ -1073,6 +1075,7 @@
           document.getElementById("pdf_view").setAttribute("src","");
         } else if(id == "photo_viewer") {
           document.getElementById("img_view").setAttribute("src","");
+          document.getElementById("img_view").style.height = "348px";
         }
 
         if(!(elem === undefined)) {
@@ -1098,7 +1101,7 @@
           if(id == "text_editor") {
             document.getElementsByClassName("document")[0].style.height = "300px";
           } else if(id == "photo_viewer") {
-            document.getElementById("img_view").style.height = "348px";            
+            document.getElementById("img_view").style.height = "348px";
             // document.getElementById("img_view").style.width = "250px";
             // document.getElementById("img_view").style.height = "100%";
           }
@@ -1110,6 +1113,7 @@
             document.getElementsByClassName("document")[0].style.height = "" + (elem.clientHeight - 45) + "px";
           } else if(id == "photo_viewer") {
             document.getElementById("img_view").style.height = "100%";
+            // document.getElementById("img_view").style.width = "auto";
           }
         }
       }
