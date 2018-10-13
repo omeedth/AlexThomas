@@ -65,6 +65,45 @@
         background: rgba(0,0,0,.90);
       }
 
+      #file_explorer_app {
+        left: 2.5px;
+      }
+
+      #text_editor_app {
+        left: 40px;
+      }
+
+      #pdf_viewer_app {
+        left: 77.5px;
+      }
+
+      #photo_viewer_app {
+        left: 115px;
+      }
+
+      .app {
+        position: absolute;
+        bottom: 2.5px;
+        width: 35px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 1px solid #6e8099;
+        background: #c6d8ef;
+        opacity: 0.8;
+        transition: .5s;
+      }
+
+      .app:hover {
+        margin-bottom: 7px;
+        opacity: 1;
+      }
+
+      .icon {
+        width: 100%;
+        height: 100%;
+      }
+
       /* .file_grid_wrapper, .file_grid, .file_row, .file_data {
         margin: 0;
         padding: 0;
@@ -185,6 +224,37 @@
       #text_editor {
         display: none;
         padding: 5px;
+      }
+
+      #photo_viewer {
+        display: none;
+      }
+
+      #pdf_viewer {
+        display: none;
+      }
+
+      .pdf_container {
+        padding-top: 25px;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+      }
+
+      #pdf_view {
+        max-width: 100%;
+        margin: auto;
+      }
+
+      .img_container {
+        display: flex;
+      }
+
+      .contained {
+        height: 100%;
+        width: auto;
+        margin: auto;
       }
 
       .document {
@@ -445,13 +515,13 @@
             </div>
 
             <div class="directories prog_part_1">
-              <div id="Desktop_dir" class="Desktop_dir dir active_dir" onclick="switch_active_directory('Desktop_dir')">
+              <div id="Desktop_dir" class="Desktop_dir dir active_dir prog_part_1" onclick="switch_active_directory('Desktop_dir')">
                   <img class="dir_logo prog_part_1" src="Open_folder_yellow.png"/>
                   <h5 class="dir_name prog_part_1">Desktop</h5>
               </div>
               <div id="Documents_dir" class="Documents_dir dir prog_part_1" onclick="switch_active_directory('Documents_dir')">
                 <img  class="dir_logo prog_part_1" src="Open_folder_yellow.png"/>
-                <h5 class="dir_name">Documents</h5>
+                <h5 class="dir_name prog_part_1">Documents</h5>
               </div>
               <div id="Pictures_dir" class="Pictures_dir dir prog_part_1" onclick="switch_active_directory('Pictures_dir')">
                 <img  class="dir_logo prog_part_1" src="Open_folder_yellow.png"/>
@@ -463,41 +533,61 @@
               </div>
             </div>
 
-            <div class="files">
+            <div class="files prog_part_1">
 
               <!-- Desktop -->
 
-              <div id="Projects2" class="Desktop_dir_sub dir folder_dir">
-                <img class="dir_logo" src="closed_folder_yellow.png" />
-                <h5 class="dir_name">Projects</h5>
+              <div id="Projects2" class="Desktop_dir_sub dir folder_dir prog_part_1">
+                <div>
+                  <img class="dir_logo prog_part_1" src="closed_folder_yellow.png" />
+                </div>
+                <div>
+                  <h5 class="dir_name prog_part_1">Projects</h5>
+                </div>
               </div>
 
-              <div id="Aboutme2" class="Desktop_dir_sub dir txt file_clk">
-                <img class="dir_logo" src="txt_file.png" />
-                <h5 class="dir_name">AboutMe.txt</h5>
+              <div id="Aboutme2" class="Desktop_dir_sub dir txt file_clk prog_part_1">
+                <div>
+                  <img class="dir_logo prog_part_1" src="txt_file.png" />
+                </div>
+                <div>
+                  <h5 class="dir_name prog_part_1">AboutMe.txt</h5>
+                </div>
               </div>
 
-              <div id="Resume2" class="Desktop_dir_sub dir txt file_clk">
-                <img class="dir_logo" src="txt_file.png" />
-                <h5 class="dir_name">Resume.txt</h5>
+              <div id="Resume2" class="Desktop_dir_sub dir txt file_clk prog_part_1">
+                <div>
+                  <img class="dir_logo prog_part_1" src="txt_file.png" />
+                </div>
+                <div>
+                  <h5 class="dir_name prog_part_1">Resume.txt</h5>
+                </div>
               </div>
 
-              <div id="Resume_PDF2" class="Desktop_dir_sub dir pdf file_clk">
-                <img class="dir_logo" src="pdf_icon.png" />
-                <h5 class="dir_name">Resume.pdf</h5>
+              <div id="Resume_PDF2" class="Desktop_dir_sub dir pdf file_clk prog_part_1">
+                <div>
+                  <img class="dir_logo prog_part_1" src="pdf_icon.png" />
+                </div>
+                <div>
+                  <h5 class="dir_name prog_part_1">Resume.pdf</h5>
+                </div>
               </div>
 
-              <div id="Me2" class="Desktop_dir_sub dir img file_clk">
-                <img class="dir_logo" src="img_icon.png" />
-                <h5 class="dir_name">Me.png</h5>
+              <div id="Me2" class="Desktop_dir_sub dir img file_clk prog_part_1">
+                <div>
+                  <img class="dir_logo prog_part_1" src="img_icon.png" />
+                </div>
+                <div>
+                  <h5 class="dir_name prog_part_1">Me.png</h5>
+                </div>
               </div>
 
               <!-- Projects Folder -->
 
-              <div id="Projects_" class="Projects_dir_sub">
-                <div id="Project1" class="Projects_dir_sub_sub dir file_clk">
-                  <img class="dir_logo" src="txt_file.png" />
-                  <h5 class="dir_name">Project.pro</h5>
+              <div id="Projects_" class="Projects_dir_sub prog_part_1">
+                <div id="Project1" class="Projects_dir_sub_sub dir file_clk prog_part_1">
+                  <img class="dir_logo prog_part_1" src="txt_file.png" />
+                  <h5 class="dir_name prog_part_1">Project.pro</h5>
                 </div>
               </div>
 
@@ -539,13 +629,49 @@
           <textarea class="document prog_part"></textarea>
         </div>
 
+        <div id="pdf_viewer" class="program prog_part_3">
+          <div id="pdf_viewer_header" class="program_header prog_part_3">
+            <div class="close header_btn prog_part_3" onclick="close_program('pdf_viewer')"></div>
+            <div class="minimize header_btn prog_part_3" onclick="minimize_program('pdf_viewer')"></div>
+            <div class="maximize header_btn prog_part_3" onclick="maximize_program('pdf_viewer')"></div>
+          </div>
+          <div class="pdf_container prog_part_3">
+            <img id="pdf_view" src="" class="viewing prog_part_3"/>
+          </div>
+        </div>
+
+        <div id="photo_viewer" class="program prog_part_4">
+          <div id="photo_viewer_header" class="program_header prog_part_4">
+            <div class="close header_btn prog_part_4" onclick="close_program('photo_viewer')"></div>
+            <div class="minimize header_btn prog_part_4" onclick="minimize_program('photo_viewer')"></div>
+            <div class="maximize header_btn prog_part_4" onclick="maximize_program('photo_viewer')"></div>
+          </div>
+          <div class="img_container prog_part_4">
+            <img id="img_view" src="" class="contained prog_part_4"/>
+          </div>
+        </div>
+
         <!-- Programs End -->
 
       </div>
 
-      <div class="dock">
+      <div id="dock" class="dock">
 
+        <div id="file_explorer_app" class="app">
+          <img class="icon" src="file_explorer.png"/>
+        </div>
 
+        <div id="text_editor_app" class="app">
+          <img class="icon" src="text_editor.png"/>
+        </div>
+
+        <div id="pdf_viewer_app" class="app">
+          <img class="icon" src="pdf_viewer.png"/>
+        </div>
+
+        <div id="photo_viewer_app" class="app">
+          <img class="icon" src="photo_viewer.ico"/>
+        </div>
 
       </div>
 
@@ -669,7 +795,10 @@
       //Make the DIV element draggagle:
       //dragElement(document.getElementById("resume"));
 
-      aboutme_txt = "Hello! My name is Alex Thomas and this is my website!";
+      aboutme_txt = "\tHello, My name is Alex Thomas, and I am a sophomore attending Boston University! I major in computer science and minor in Japanese. I am interested in backend software development, and I hope to concentrate on AI or Machine Learning. Currently, I am working towards meeting these goals by incorporating the knowledge I gain from classes with the tutorials and projects I do through my extracurricular activities.\n" +
+	"\tThrough my courses and self study I have acquired many useful skills. I have high proficiency with multiple languages such as Java, C, and Python. Furthermore, I have experience creating projects with all of those languages as well. I encourage you to read my resume for a more in depth view of what I have created. Although it is crucial that computer scientists be fluent and experienced in various programming languages, I understand that Companies seek people who are also motivated, and eager" +  "to learn new things. I strongly believe that my enthusiasm for computer science is one of the highest among my peers.\n" +
+	"\tI am ecstatic at the opportunity to apply my Computer Science knowledge. Please peruse the website to get a feel for what type of experience I have had and please make sure to visit my resume.\n\n\nP.S: This is a text editor so please feel free to play around and write any thing you want inside here. It will save the data you input until you refresh the page :)"
+
       resume_txt = "This is a pure text version of my resume! For a prettier version open the PDF!"
 
       onAboutMe = false;
@@ -679,6 +808,8 @@
       document.getElementById("desktop").addEventListener("click", select);
 
       document.getElementById("desktop").addEventListener("mousedown", focusElem);
+
+      document.getElementById("dock").addEventListener("mousedown",open_app);
 
       function focusElem(e) {
         elem = e.target;
@@ -692,6 +823,17 @@
           console.log("Text Editor");
           document.getElementsByClassName("focused")[0].classList.remove("focused");
           prog = document.getElementById("text_editor");
+          prog.classList.add("focused");
+          document.getElementsByClassName("document")[0].focus();
+        } else if((!elem.classList.contains("close")) && elem.classList.contains("prog_part_3")) {
+          console.log("PDF Viewer");
+          document.getElementsByClassName("focused")[0].classList.remove("focused");
+          prog = document.getElementById("pdf_viewer");
+          prog.classList.add("focused");
+        } else if((!elem.classList.contains("close")) && elem.classList.contains("prog_part_4")) {
+          console.log("Photo Viewer");
+          document.getElementsByClassName("focused")[0].classList.remove("focused");
+          prog = document.getElementById("photo_viewer");
           prog.classList.add("focused");
         }
       }
@@ -770,7 +912,8 @@
         }
         elem = e.target;
         parent = elem.parentNode.parentNode;
-        // console.log("Double Clicked: " + elem);
+        // console.log("Double Clicked: " + elem.classList);
+        // console.log("Parent: " + parent.classList);
         if(elem.classList.contains("folder") || parent.classList.contains("folder")) {
           // console.log("Double Clicked a Folder");
           fe = document.getElementById("file_explorer");
@@ -806,6 +949,42 @@
           }
         } else if(elem.classList.contains("folder_dir") || parent.classList.contains("folder_dir")) {
           show_dir_contents(elem);
+        } else if(elem.classList.contains("pdf") || parent.classList.contains("pdf")) {
+          pv = document.getElementById("pdf_viewer");
+          pdf = elem.id + parent.id;
+          console.log("PDF File: " + pdf);
+          if(pv.style.display == "block") { // Already Opened
+            //Load the file we clicked on
+            load_pdf(pdf);
+          } else {
+            open_program("pdf_viewer");
+            // console.log("ID: " + pdf);
+            load_pdf(pdf);
+          }
+        } else if(elem.classList.contains("img") || parent.classList.contains("img")) {
+          iv = document.getElementById("photo_viewer");
+          img = elem.id + parent.id;
+          console.log("Image File: " + img);
+          if(iv.style.display == "block") { // Already Opened
+            //Load the file we clicked on
+            load_img(img);
+          } else {
+            open_program("photo_viewer");
+            // console.log("ID: " + pdf);
+            load_img(img);
+          }
+        }
+      }
+
+      function open_app(e) {
+        elem = e.target;
+        parent = elem.parentNode;
+        if(elem.classList.contains("app") || elem.parentNode.classList.contains("app")) {
+          app_id = elem.id + parent.id;
+          //console.log(app_id);
+          //app = document.getElementById(app_id.slice(0,app_id.length-4));
+          //console.log(app);
+          open_program(app_id.slice(0,app_id.length-4));
         }
       }
 
@@ -839,6 +1018,18 @@
         }
       }
 
+      function load_pdf(id) {
+        if(id.startsWith("Resume")) {
+          document.getElementById("pdf_view").setAttribute("src","Resume.png");
+        }
+      }
+
+      function load_img(id) {
+        if(id.startsWith("Me")) {
+          document.getElementById("img_view").setAttribute("src","Me.png");
+        }
+      }
+
       function save_text() {
         if(onAboutMe) {
           aboutme_txt = document.getElementsByClassName("document")[0].value;
@@ -847,11 +1038,11 @@
         }
       }
 
-      function load_pdf(id) {
-        url = document.getElementById(id).name;
-        var win = window.open(url, '_blank');
-        win.focus();
-      }
+      // function load_pdf(id) {
+      //   url = document.getElementById(id).name;
+      //   var win = window.open(url, '_blank');
+      //   win.focus();
+      // }
 
       function open_program(id) {
         document.getElementById(id).style.display = "block";
@@ -859,6 +1050,10 @@
           document.getElementsByClassName("focused")[0].classList.remove("focused");
         }
         document.getElementById(id).classList.add("focused");
+
+        if(id == "text_editor") {
+          document.getElementsByClassName("document")[0].focus();
+        }
       }
 
       function close_program(id) {
@@ -871,6 +1066,10 @@
           save_text();
           document.getElementsByClassName("document")[0].style.height = "300px";
           //document.getElementsByClassName("document")[0].value = "";
+        } else if(id == "pdf_viewer") {
+          document.getElementById("pdf_view").setAttribute("src","");
+        } else if(id == "photo_viewer") {
+          document.getElementById("img_view").setAttribute("src","");
         }
 
         if(!(elem === undefined)) {
@@ -895,6 +1094,8 @@
           elem.style.height = "350px";
           if(id == "text_editor") {
             document.getElementsByClassName("document")[0].style.height = "300px";
+          } else if(id == "photo_viewer") {
+            document.getElementById("img_view").style.height = "348px";
           }
         } else {
           elem.style.width = "100%"
@@ -902,6 +1103,8 @@
           if(id == "text_editor") {
             // console.log(elem.clientHeight);
             document.getElementsByClassName("document")[0].style.height = "" + (elem.clientHeight - 45) + "px";
+          } else if(id == "photo_viewer") {
+            document.getElementById("img_view").style.height = "100%";
           }
         }
       }
