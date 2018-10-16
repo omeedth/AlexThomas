@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
   </head>
-  <body>
+  <body onresize="holdElementsWithin()">
 
     <!-- Styles -->
 
@@ -79,6 +79,10 @@
 
       #photo_viewer_app {
         left: 115px;
+      }
+
+      #game_player_app {
+        left: 152.5px;
       }
 
       .app {
@@ -217,6 +221,12 @@
         top: 5px;
       }
 
+      #UnityCubeGame_ {
+        position: absolute;
+        left: 90px;
+        bottom: 55px;
+      }
+
       #file_explorer {
         display: none;
       }
@@ -231,6 +241,10 @@
       }
 
       #pdf_viewer {
+        display: none;
+      }
+
+      #game_player {
         display: none;
       }
 
@@ -507,6 +521,18 @@
 
         </div>
 
+        <div id="UnityCubeGame_" class="file game">
+
+          <div class="file_type_container">
+            <img class="file_type responsive" src="UnityCubeGame.png"/>
+          </div>
+
+          <div class="file_name_container">
+            <p class="file_name">CubeGame</p>
+          </div>
+
+        </div>
+
         <!-- Files End -->
 
         <!-- Programs -->
@@ -587,12 +613,21 @@
                 </div>
               </div>
 
+              <div id="UnityCubeGame__" class="Desktop_dir_sub dir game file_clk prog_part_1">
+                <div>
+                  <img class="dir_logo prog_part_1" src="UnityCubeGame.png" />
+                </div>
+                <div>
+                  <h5 class="dir_name prog_part_1">CubeGame</h5>
+                </div>
+              </div>
+
               <!-- Projects Folder -->
 
               <div id="Projects_" class="Projects_dir_sub prog_part_1">
-                <div id="Project1" class="Projects_dir_sub_sub dir file_clk prog_part_1">
-                  <img class="dir_logo prog_part_1" src="txt_file.png" />
-                  <h5 class="dir_name prog_part_1">Project.pro</h5>
+                <div id="UnityCubeGame" class="Projects_dir_sub_sub game dir file_clk prog_part_1">
+                  <img class="dir_logo prog_part_1" src="UnityCubeGame.png" />
+                  <h5 class="dir_name prog_part_1">UnityCubeGame.pro</h5>
                 </div>
               </div>
 
@@ -656,6 +691,15 @@
           </div>
         </div>
 
+        <div id="game_player" class="program prog_part_5">
+          <div id="game_player_header" class="program_header prog_part_5">
+            <div class="close header_btn prog_part_5" onclick="close_program('game_player')"></div>
+            <div class="minimize header_btn prog_part_5" onclick="minimize_program('game_player')"></div>
+            <div class="maximize header_btn prog_part_5" onclick="maximize_program('game_player')"></div>
+          </div>
+          <iframe id="game" class="game_app prog_part_5" FRAMEBORDER="no" BORDER="0" SCROLLING="no" height="100%" width="100%" src=""></iframe>
+        </div>
+
         <!-- Programs End -->
 
       </div>
@@ -676,6 +720,10 @@
 
         <div id="photo_viewer_app" class="app">
           <img class="icon" src="photo_viewer.ico"/>
+        </div>
+
+        <div id="game_player_app" class="app">
+          <img class="icon" src="game_player.ico"/>
         </div>
 
       </div>
@@ -816,6 +864,17 @@
 
       document.getElementById("dock").addEventListener("mousedown",open_app);
 
+      function holdElementsWithin() {
+        deskFiles = document.getElementsByClassName("file");
+        for(var i = 0; i < deskFiles.length; i++) {
+          fi = deskFiles[i];
+          fCord = fi.getBoundingClientRect();
+          if(fCord.top < 5) {
+            fi.style.top = "5px";
+          }
+        }
+      }
+
       function focusElem(e) {
         elem = e.target;
         // console.log(elem);
@@ -839,6 +898,11 @@
           console.log("Photo Viewer");
           document.getElementsByClassName("focused")[0].classList.remove("focused");
           prog = document.getElementById("photo_viewer");
+          prog.classList.add("focused");
+        } else if((!elem.classList.contains("close")) && elem.classList.contains("prog_part_5")) {
+          console.log("Game Player");
+          document.getElementsByClassName("focused")[0].classList.remove("focused");
+          prog = document.getElementById("game_player");
           prog.classList.add("focused");
         }
       }
@@ -978,6 +1042,18 @@
             // console.log("ID: " + pdf);
             load_img(img);
           }
+        } else if(elem.classList.contains("game") || parent.classList.contains("game")) {
+          gp = document.getElementById("game_player");
+          game = elem.id + parent.id;
+          console.log("Game: " + game);
+          if(gp.style.display == "block") { // Already Opened
+            //Load the file we clicked on
+            load_game(game);
+          } else {
+            open_program("game_player");
+            // console.log("ID: " + pdf);
+            load_game(game);
+          }
         }
       }
 
@@ -1007,6 +1083,15 @@
           // document.getElementsByClassName("path_str")[0].innerHTML += "\\projects";
 
         }
+      }
+
+      function load_game(id) {
+        console.log(id);
+        if(id.startsWith("UnityCubeGame")) {
+          // document.getElementById("game").setAttribute("src","https://omeedth.github.io/" + id + "/");
+          document.getElementById("game").setAttribute("src","https://omeedth.github.io/UnityCubeGame/");
+        }
+
       }
 
       function load_file(id) {
@@ -1076,6 +1161,8 @@
         } else if(id == "photo_viewer") {
           document.getElementById("img_view").setAttribute("src","");
           document.getElementById("img_view").style.height = "348px";
+        } else if(id == "game_player") {
+          document.getElementById("game").setAttribute("src","");
         }
 
         if(!(elem === undefined)) {
